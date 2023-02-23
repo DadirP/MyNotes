@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Dadir/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.146" />
+        <entry key="..\:/Users/Dadir/AndroidStudioProjects/MyNotes/app/src/main/res/drawable/ic_note_add.xml" value="0.146" />
         <entry key="..\:/Users/Dadir/AndroidStudioProjects/MyNotes/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Dadir/AndroidStudioProjects/MyNotes/app/src/main/res/layout/item_note.xml" value="0.253125" />
+        <entry key="..\:/Users/Dadir/AndroidStudioProjects/MyNotes/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.146" />
       </map>
     </option>
   </component>

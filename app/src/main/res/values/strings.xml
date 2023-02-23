@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MyNotes</string>
+    <string name="hint_description">Añadir Nota</string>
+    <string name="dialog_title">¿Eliminar Nota?</string>
+    <string name="dialog_ok">Eliminar</string>
+    <string name="gialog_cancel">Cancelar</string>
+    <string name="validation_field_required">Campo Requerido</string>
 </resources>
