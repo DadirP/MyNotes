@@ -45,8 +45,30 @@
             app:tint="@color/brown_500" />
     </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notes_pending"
+            android:textSize="12dp"
+            android:paddingHorizontal="@dimen/common_padding_default"
+            android:textAppearance="?attr/textAppearanceOverline"/>
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycleView"
+            android:id="@+id/rvNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_note"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notes_finished"
+            android:textSize="12dp"
+            android:paddingHorizontal="@dimen/common_padding_default"
+            android:textAppearance="?attr/textAppearanceOverline"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNotesFinished"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_note"/>

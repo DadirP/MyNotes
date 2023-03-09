@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mynotes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), OnClickListener {
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
         private lateinit var noteAdapter: NoteAdapter
+        private lateinit var noteFinishedAdapter: NoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,15 +17,16 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         setContentView(binding.root)
 
 
-        val data = mutableListOf(
-            Note(1,"Estudiar"),
-            Note(2,"Ir al mercado"),
-            Note(3,"Comprar arroz",true))
-
-        noteAdapter = NoteAdapter(data, this)
-        binding.recycleView.apply {
+        noteAdapter = NoteAdapter(mutableListOf(), this)
+        binding.rvNotes.apply {
             layoutManager = LinearLayoutManager (this@MainActivity)
             adapter = noteAdapter
+        }
+
+        noteFinishedAdapter = NoteAdapter(mutableListOf(), this)
+        binding.rvNotesFinished.apply {
+            layoutManager = LinearLayoutManager (this@MainActivity)
+            adapter = noteFinishedAdapter
         }
 
         binding.btnAdd.setOnClickListener{
@@ -39,26 +41,49 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        getData()
+    }
+
+    private fun getData () {
+        val data = mutableListOf(
+        Note(1,"Estudiar"),
+        Note(2,"Ir al mercado"),
+        Note(3,"Comprar arroz",true))
+        data.forEach { note ->  
+            addNoteAuto(note)
+        }
+    }
     private fun addNoteAuto(note: Note) {
-        noteAdapter.add(note)
+        if (note.isFinished) {
+            noteFinishedAdapter.add(note)
+        } else {
+            noteAdapter.add(note)
+        }
     }
 
     private fun deleteNoteAuto(note: Note) {
-        val builder = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.dialog_title))
-            .setPositiveButton(getString(R.string.dialog_ok),{ dialogInterface, i->
-                noteAdapter.remove(note)
-            })
-            .setNegativeButton(getString(R.string.gialog_cancel),null)
-        builder.create().show()
+        if (note.isFinished){
+                noteAdapter.remove(note)}
+        else {
+            noteFinishedAdapter.remove(note)
+        }
     }
 
     override fun onChecked(note: Note) {
-
+        deleteNoteAuto(note)
+        addNoteAuto(note)
     }
 
-    override fun onLongClick(note: Note) {
-        deleteNoteAuto(note)
+    override fun onLongClick(note: Note, currentAdapter: NoteAdapter) {
+        val builder = AlertDialog.Builder(this)
+        .setTitle(getString(R.string.dialog_title))
+        .setPositiveButton(getString(R.string.dialog_ok),{ dialogInterface, i->
+            currentAdapter.remove(note)
+        })
+        .setNegativeButton(getString(R.string.gialog_cancel),null)
+        builder.create().show()
     }
 
 

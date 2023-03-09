@@ -1,5 +1,6 @@
 package com.example.mynotes
 
+import android.content.Context
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,11 @@ import com.example.mynotes.databinding.ItemNoteBinding
 class NoteAdapter (var noteList:MutableList<Note>,private val listener : OnClickListener) :
     RecyclerView.Adapter<NoteAdapter.ViewHolder> (){
 
-
+    private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_note,parent, false)
+        context = parent.context
+        val view = LayoutInflater.from(context).inflate(R.layout.item_note,parent, false)
 
         return ViewHolder(view)
     }
@@ -25,13 +27,14 @@ class NoteAdapter (var noteList:MutableList<Note>,private val listener : OnClick
         holder.setListerner(note)
 
         holder.binding.tvDescription.text = note.description
-
         holder.binding.cbFinished.isChecked = note.isFinished
 
         if (note.isFinished){
-            holder.binding.tvDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f)
+            holder.binding.tvDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP,
+                context.resources.getInteger(R.integer.description_size_finished).toFloat())
         } else{
-            holder.binding.tvDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP,16f)
+            holder.binding.tvDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP,
+                context.resources.getInteger(R.integer.description_size_default).toFloat())
         }
     }
 
@@ -53,13 +56,13 @@ class NoteAdapter (var noteList:MutableList<Note>,private val listener : OnClick
 
         fun setListerner(note: Note){
 
-            binding.cbFinished.setOnClickListener {
+            binding.cbFinished.setOnClickListener    {
                 note.isFinished = (it as CheckBox).isChecked
-                notifyDataSetChanged()
+                listener.onChecked(note)
             }
 
             binding.root.setOnLongClickListener {
-                listener.onLongClick(note)
+                listener.onLongClick(note, this@NoteAdapter)
                 true
             }
         }
